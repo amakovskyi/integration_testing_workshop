@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 
 @Controller()
@@ -19,6 +19,12 @@ export class AppController {
       password
     },
   ) {
+    if (body.login.length == 0) {
+      throw new HttpException('[login] cannot be empty', 400)
+    }
+    if (body.password.length == 0) {
+      throw new HttpException('[password] cannot be empty', 400)
+    }
     this.authService.register({
       login: body.login,
       password: body.password,

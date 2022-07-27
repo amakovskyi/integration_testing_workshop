@@ -11,11 +11,6 @@ export const LOG_FG_DIM = '\x1b[2m';
 export const LOG_FG_GRAY = '\x1b[37m';
 
 export class Logger {
-  static println(count = 1) {
-    for (let i = 0; i < count; i++) {
-      process.stdout.write('\n');
-    }
-  }
 
   static print(text: any) {
     let value = text.toString();
@@ -25,9 +20,17 @@ export class Logger {
     process.stdout.write(value);
   }
 
-  static log(text: any) {
+  static println(count = 1) {
+    for (let i = 0; i < count; i++) {
+      Logger.print('\n');
+    }
+  }
+
+  static log(text: any, println: boolean = true) {
     this.print(text);
-    Logger.println();
+    if (println) {
+      Logger.println();
+    }
   }
 
   static logError(text: string) {
@@ -39,6 +42,6 @@ export class Logger {
   }
 
   static logData(text: string) {
-    Logger.log(LOG_FG_WHITE + LOG_BG_BLACK + text.trim() + '\n' + LOG_END);
+    Logger.log(LOG_FG_WHITE + LOG_BG_BLACK + text.trim() + '\n' + LOG_END, false);
   }
 }
