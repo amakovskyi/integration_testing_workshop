@@ -1,27 +1,42 @@
 import { ApiException } from './api.exception';
 import { Logger } from './logging';
+import { AxiosRequestConfig } from 'axios';
 
 const axios = require('axios');
-const baseUrl = 'http://localhost:3000/';
+export const BASE_API_URL = 'http://localhost:3000/';
 
 export class ApiClient {
+
+  private token: string | null = null;
+
+  withToken(token: string): ApiClient {
+    let client = new ApiClient();
+    client.token = token;
+    return client;
+  }
 
   private async execute(
     requestData: {
       path: string,
       body?: any
     },
-    method: (url: string, body?: any) => any,
+    method: (url: string, body?: any, config?: AxiosRequestConfig) => any,
   ) {
     Logger.println();
-    let url = baseUrl + requestData.path;
+    let url = BASE_API_URL + requestData.path;
     Logger.logBold('POST ' + url);
     if (requestData.body != null) {
       Logger.log('REQUEST BODY');
       Logger.logData(JSON.stringify(requestData.body, null, 2));
     }
+    let config: AxiosRequestConfig = {};
+    if (this.token != null) {
+      config.headers = {
+        authorization: 'Token: ' + this.token,
+      };
+    }
     try {
-      let response = await method(url, requestData.body);
+      let response = await method(url, requestData.body, config);
       Logger.log('RESPONSE: ' + response.status + ' ' + response.statusText);
       if (response.data != null && response.data != '') {
         Logger.log('RESPONSE BODY');
@@ -43,11 +58,15 @@ export class ApiClient {
   }
 
   async get(path: string): Promise<any> {
-    return this.execute({ path }, axios.get);
+    return this.execute({ path }, async (url, data, config) => {
+      return axios.get(url, config);
+    });
   }
 
   async post(path: string, body?: any): Promise<any> {
-    return this.execute({ path, body }, axios.post);
+    return this.execute({ path, body }, async (url, data, config) => {
+      return axios.post(url, data, config);
+    });
   }
 
 }

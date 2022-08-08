@@ -28,11 +28,7 @@ export class AuthStorage {
         console.log(e);
       }
     }
-    let userId = tokens[token];
-    if (userId == null) {
-      throw new HttpException('Unauthorized', 401);
-    }
-    return userId;
+    return tokens[token];
   }
 
 }

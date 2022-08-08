@@ -1,5 +1,5 @@
 import { ApiException } from './api.exception';
-import { validateContent } from './content.validation';
+import { validateMatch } from 'api-auditor';
 
 export function expectError(fn: () => Promise<any>, statusCode: number = 400, message?: string): (() => Promise<any>) {
   return async () => {
@@ -9,9 +9,9 @@ export function expectError(fn: () => Promise<any>, statusCode: number = 400, me
     } catch (e) {
       if (e instanceof ApiException) {
         if (message == null) {
-          validateContent(e.data, { statusCode });
+          validateMatch(e.data, { statusCode });
         } else {
-          validateContent(e.data, { statusCode, message });
+          validateMatch(e.data, { statusCode, message });
         }
       } else {
         throw e;

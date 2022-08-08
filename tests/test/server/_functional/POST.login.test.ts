@@ -10,20 +10,24 @@ describe('POST [/register] functional', () => {
     let password = RandomUtils.password();
     await BaseClient.post('register', { login, password });
 
-    // user can log in
     let loginResult = await BaseClient.post('login', { login, password });
     validateMatch(loginResult, {
       accessToken: Matchers.string(),
     });
   });
 
-  test('Cannot register same user again', expectError(async () => {
+  test('User not found', expectError(async () => {
+    let login = RandomUtils.login();
+
+    await BaseClient.post('login', { login, password: RandomUtils.password() });
+  }, 401, 'User with specified login not found'));
+
+  test('Wrong password', expectError(async () => {
     let login = RandomUtils.login();
     let password = RandomUtils.password();
     await BaseClient.post('register', { login, password });
 
-    // register again with same credentials should fail
-    await BaseClient.post('register', { login, password });
-  }, 400, 'User with specified login already exists'));
+    await BaseClient.post('login', { login, password: RandomUtils.password() });
+  }, 401, 'Password is incorrect'));
 
 });
