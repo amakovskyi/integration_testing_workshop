@@ -1,9 +1,20 @@
-export interface User {
+export interface UserData {
   id: string,
   login: string;
   password: string;
+  firstName: string;
+  lastName: string;
+  description: string;
+  followedUsers: string[];
+}
+
+export interface PostData {
+  id: string;
+  authorId: string;
+  text: string;
 }
 
 export interface Data {
-  users: User[];
+  users: UserData[];
+  posts: PostData[];
 }

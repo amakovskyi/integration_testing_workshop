@@ -1,6 +1,7 @@
-import { Headers, Body, Controller, Get, HttpException, Post } from '@nestjs/common';
+import { Headers, Body, Controller, Get, HttpException, Post, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
+import { UserProfile } from '../domain/user.post';
 
 @Controller('users')
 export class UsersController {
@@ -12,14 +13,58 @@ export class UsersController {
   }
 
   @Get('me')
-  register(
+  me(
     @Headers() headers,
   ): {
     id: string,
     login: string,
+    firstName: string,
+    lastName: string,
+    description: string,
   } {
     let userId = this.authService.authByToken(headers);
-    return this.service.getUserInfoById(userId);
+    return this.service.getUserInfoById(userId, userId);
+  }
+
+  @Post('updateMyProfile')
+  register(
+    @Headers() headers,
+    @Body() body: {
+      firstName: string,
+      lastName: string,
+      description: string,
+    },
+  ) {
+    let userId = this.authService.authByToken(headers);
+    return this.service.updateUserInfoById(userId, body);
+  }
+
+  @Get('getProfile')
+  getProfile(
+    @Headers() headers,
+    @Query() query: { id },
+  ): UserProfile {
+    let userId = this.authService.authByToken(headers);
+    let info = this.service.getUserInfoById(userId, query.id);
+    return {
+      id: info.id,
+      firstName: info.firstName,
+      lastName: info.lastName,
+      description: info.description,
+      isFollowed: info.isFollowed,
+    };
+  }
+
+  @Get('list')
+  list(
+    @Headers() headers,
+    @Query() query: { query, count, offset },
+  ): {
+    total: number,
+    items: UserProfile[]
+  } {
+    let userId = this.authService.authByToken(headers);
+    return this.service.list(userId, query.query, query.count, query.offset);
   }
 
 }

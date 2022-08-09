@@ -1,9 +1,9 @@
 import { BASE_API_URL, BaseClient } from '../../../src/api.client';
 import { RandomUtils } from '../../../src/random.utils';
-import { Matchers, Random, validateMatch } from 'api-auditor';
 import { expectError } from '../../../src/expect.error';
+import { Matchers, Random, validateMatch } from '@amakovskyi/api-auditor';
 
-describe('POST [/register] functional', () => {
+describe('Authorization', () => {
 
   test('Auth works', async () => {
     let login = RandomUtils.login();

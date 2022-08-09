@@ -1,7 +1,7 @@
 import { BaseClient } from '../../../src/api.client';
 import { RandomUtils } from '../../../src/random.utils';
 import { expectError } from '../../../src/expect.error';
-import { Matchers, validateMatch } from 'api-auditor';
+import { Matchers, validateMatch } from '@amakovskyi/api-auditor';
 
 describe('POST [/register] functional', () => {
 

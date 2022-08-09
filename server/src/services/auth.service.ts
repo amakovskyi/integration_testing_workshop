@@ -18,12 +18,16 @@ export class AuthService {
   }) {
     let data = this.storage.loadData();
     if (data.users.find(it => it.login == dto.login)) {
-      throw new HttpException('User with specified login already exists', 400);
+      throw new HttpException('User with specified [login] already exists', 400);
     }
     data.users.push({
       id: generateUuid(),
       login: dto.login,
       password: dto.password,
+      firstName: null,
+      lastName: null,
+      description: null,
+      followedUsers: [],
     });
     this.storage.commitData(data);
   }
@@ -37,7 +41,7 @@ export class AuthService {
     let data = this.storage.loadData();
     let user = data.users.find(it => it.login == dto.login);
     if (user == null) {
-      throw new HttpException('User with specified login not found', 401);
+      throw new HttpException('User with specified [login] not found', 401);
     }
     if (user.password != dto.password) {
       throw new HttpException('Password is incorrect', 401);
@@ -53,14 +57,14 @@ export class AuthService {
     if (!headers.hasOwnProperty('authorization')) {
       throw new HttpException('Unauthorized', 401);
     }
-    let authorization: string = headers.authorization
+    let authorization: string = headers.authorization;
     if (authorization == null || typeof authorization != 'string') {
       throw new HttpException('Unauthorized', 401);
     }
     if (!authorization.startsWith('Token: ')) {
       throw new HttpException('Unauthorized', 401);
     }
-    let token = authorization.substring('Token: '.length)
+    let token = authorization.substring('Token: '.length);
     let userId = this.authStorage.authByToken(token);
     if (userId == null) {
       throw new HttpException('Unauthorized', 401);

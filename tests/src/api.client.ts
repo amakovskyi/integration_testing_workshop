@@ -57,8 +57,15 @@ export class ApiClient {
     }
   }
 
-  async get(path: string): Promise<any> {
-    return this.execute({ path }, async (url, data, config) => {
+  async get(path: string, query?: any): Promise<any> {
+    let pathWithQuery = path;
+    if (query != null) {
+      let queryString = Object.keys(query).map(it => it + '=' + query[it]).join('&');
+      if (queryString.length > 0) {
+        pathWithQuery = path + '?' + queryString;
+      }
+    }
+    return this.execute({ path: pathWithQuery }, async (url, data, config) => {
       return axios.get(url, config);
     });
   }
@@ -67,6 +74,11 @@ export class ApiClient {
     return this.execute({ path, body }, async (url, data, config) => {
       return axios.post(url, data, config);
     });
+  }
+
+  async getUserId(): Promise<string> {
+    let data = await this.get('users/me');
+    return data.id;
   }
 
 }

@@ -19,6 +19,7 @@ export class Storage {
       data = {} as any as Data;
     }
     if (data.users == null) data.users = [];
+    if (data.posts == null) data.posts = [];
     return data;
   }
 

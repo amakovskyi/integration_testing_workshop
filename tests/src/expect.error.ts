@@ -1,5 +1,5 @@
 import { ApiException } from './api.exception';
-import { validateMatch } from 'api-auditor';
+import { validateMatch } from '@amakovskyi/api-auditor';
 
 export function expectError(fn: () => Promise<any>, statusCode: number = 400, message?: string): (() => Promise<any>) {
   return async () => {

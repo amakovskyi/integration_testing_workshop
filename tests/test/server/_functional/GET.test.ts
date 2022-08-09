@@ -1,5 +1,5 @@
 import { BaseClient } from '../../../src/api.client';
-import { validateMatch } from 'api-auditor';
+import { validateMatch } from '@amakovskyi/api-auditor';
 
 describe('GET [/] functional', () => {
 

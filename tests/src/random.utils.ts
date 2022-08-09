@@ -1,4 +1,4 @@
-import { Random } from 'api-auditor';
+import { Random } from '@amakovskyi/api-auditor';
 
 export class RandomUtils {
 
