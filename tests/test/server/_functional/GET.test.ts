@@ -3,9 +3,19 @@ import { validateMatch } from '@amakovskyi/api-auditor';
 
 describe('GET [/] functional', () => {
 
-  test('It should work', async () => {
+  test('Empty request', async () => {
     let result = await BaseClient.get('');
-    validateMatch(result, 'Hello from test server!')
+    validateMatch(result, {
+      status: 'Up',
+    });
+  });
+
+  test('Message', async () => {
+    let result = await BaseClient.get('', { message: 'Hello!' });
+    validateMatch(result, {
+      status: 'Up',
+      message: 'Hello!',
+    });
   });
 
 });

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 
 @Controller()
@@ -8,8 +8,11 @@ export class AppController {
   }
 
   @Get()
-  getHello() {
-    return 'Hello from test server!';
+  getHello(@Query() query: { message }) {
+    return {
+      status: 'Up',
+      message: query.message,
+    };
   }
 
   @Post('register')
@@ -20,10 +23,10 @@ export class AppController {
     },
   ) {
     if (body.login.length == 0) {
-      throw new HttpException('[login] cannot be empty', 400)
+      throw new HttpException('[login] cannot be empty', 400);
     }
     if (body.password.length == 0) {
-      throw new HttpException('[password] cannot be empty', 400)
+      throw new HttpException('[password] cannot be empty', 400);
     }
     this.authService.register({
       login: body.login,
