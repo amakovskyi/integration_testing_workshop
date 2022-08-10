@@ -3,7 +3,7 @@ import { RandomUtils } from '../../../src/random.utils';
 import { validate } from 'uuid';
 import { Matchers, Random, validateMatch } from '@amakovskyi/api-auditor';
 
-describe('Workshop part 2.1. Testing "My profile". Functional test.', () => {
+describe('Workshop part 2.1. Testing "My profile".', () => {
 
   // 1. Create user using AuthCommons
   // 2. Validate result
