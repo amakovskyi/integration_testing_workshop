@@ -24,6 +24,6 @@ describe('POST [/register] functional', () => {
 
     // register again with same credentials should fail
     await BaseClient.post('register', { login, password });
-  }, 400, 'User with specified login already exists'));
+  }, 400, 'User with specified [login] already exists'));
 
 });

@@ -20,7 +20,7 @@ describe('POST [/register] functional', () => {
     let login = RandomUtils.login();
 
     await BaseClient.post('login', { login, password: RandomUtils.password() });
-  }, 401, 'User with specified login not found'));
+  }, 401, 'User with specified [login] not found'));
 
   test('Wrong password', expectError(async () => {
     let login = RandomUtils.login();

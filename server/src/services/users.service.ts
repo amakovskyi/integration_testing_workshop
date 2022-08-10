@@ -62,7 +62,7 @@ export class UsersService {
     let users = data.users;
     let currentUser = data.users.find(it => it.id == userId);
     if (query != null && query.length > 0) {
-      users = users.filter(it => it.firstName.startsWith(query) || it.lastName.startsWith(query));
+      users = users.filter(it => it.firstName?.startsWith(query) || it.lastName?.startsWith(query));
     }
     return {
       total: users.length,

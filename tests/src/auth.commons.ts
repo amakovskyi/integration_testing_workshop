@@ -10,7 +10,9 @@ export class AuthCommons {
     await BaseClient.post('register', { login, password });
     let loginResult = await BaseClient.post('login', { login, password });
     let token = loginResult.accessToken;
-    return BaseClient.withToken(token);
+    let client = BaseClient.withToken(token);
+    await client.loadUserId();
+    return client;
   }
 
 }

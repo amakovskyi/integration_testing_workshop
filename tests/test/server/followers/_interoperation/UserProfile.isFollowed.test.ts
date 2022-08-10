@@ -1,15 +1,14 @@
-import { RandomUtils } from '../../../../src/random.utils';
 import { AuthCommons } from '../../../../src/auth.commons';
-import { Matchers, ObjectMatchers, Random, validateMatch } from '@amakovskyi/api-auditor';
+import {validateMatch } from '@amakovskyi/api-auditor';
 
-describe('[Follow user] response in [User profile]', () => {
+describe('[User profile] responds to [Follow user]', () => {
 
   test('User not followed', async () => {
     let user = await AuthCommons.newUser();
     let other = await AuthCommons.newUser();
 
     let profile = await user.get('users/getProfile', {
-      id: await other.getUserId(),
+      id:  other.userId,
     });
     validateMatch(profile, {
       isFollowed: false,
@@ -21,11 +20,11 @@ describe('[Follow user] response in [User profile]', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId: await other.getUserId(),
+      userId:  other.userId,
     });
 
     let profile = await user.get('users/getProfile', {
-      id: await other.getUserId(),
+      id:  other.userId,
     });
     validateMatch(profile, {
       isFollowed: true,
@@ -37,14 +36,14 @@ describe('[Follow user] response in [User profile]', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId: await other.getUserId(),
+      userId:   other.userId,
     });
     await user.post('followers/unfollow', {
-      userId: await other.getUserId(),
+      userId:   other.userId,
     });
 
     let profile = await user.get('users/getProfile', {
-      id: await other.getUserId(),
+      id:   other.userId,
     });
     validateMatch(profile, {
       isFollowed: false,

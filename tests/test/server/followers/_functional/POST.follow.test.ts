@@ -9,12 +9,12 @@ describe('POST [/followers/follow] functional', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId: await other.getUserId(),
+      userId:  other.userId,
     });
 
     validateMatch(
       await user.get('users/getProfile', {
-        id: await other.getUserId(),
+        id:  other.userId,
       }), {
         isFollowed: true,
       },

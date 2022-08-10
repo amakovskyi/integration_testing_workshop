@@ -8,11 +8,17 @@ export const BASE_API_URL = 'http://localhost:3000/';
 export class ApiClient {
 
   private token: string | null = null;
+  userId: string | null = null;
 
   withToken(token: string): ApiClient {
     let client = new ApiClient();
     client.token = token;
     return client;
+  }
+
+  async loadUserId() {
+    let data = await this.get('users/me');
+   this. userId = data.id;
   }
 
   private async execute(
@@ -74,11 +80,6 @@ export class ApiClient {
     return this.execute({ path, body }, async (url, data, config) => {
       return axios.post(url, data, config);
     });
-  }
-
-  async getUserId(): Promise<string> {
-    let data = await this.get('users/me');
-    return data.id;
   }
 
 }
