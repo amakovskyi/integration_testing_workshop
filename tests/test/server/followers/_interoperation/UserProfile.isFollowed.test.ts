@@ -1,5 +1,5 @@
 import { AuthCommons } from '../../../../src/auth.commons';
-import {validateMatch } from '@amakovskyi/api-auditor';
+import { validateMatch } from '@amakovskyi/api-auditor';
 
 describe('[User profile] responds to [Follow user]', () => {
 
@@ -8,7 +8,7 @@ describe('[User profile] responds to [Follow user]', () => {
     let other = await AuthCommons.newUser();
 
     let profile = await user.get('users/getProfile', {
-      id:  other.userId,
+      id: other.userId,
     });
     validateMatch(profile, {
       isFollowed: false,
@@ -20,11 +20,11 @@ describe('[User profile] responds to [Follow user]', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId:  other.userId,
+      userId: other.userId,
     });
 
     let profile = await user.get('users/getProfile', {
-      id:  other.userId,
+      id: other.userId,
     });
     validateMatch(profile, {
       isFollowed: true,
@@ -36,14 +36,14 @@ describe('[User profile] responds to [Follow user]', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId:   other.userId,
+      userId: other.userId,
     });
     await user.post('followers/unfollow', {
-      userId:   other.userId,
+      userId: other.userId,
     });
 
     let profile = await user.get('users/getProfile', {
-      id:   other.userId,
+      id: other.userId,
     });
     validateMatch(profile, {
       isFollowed: false,

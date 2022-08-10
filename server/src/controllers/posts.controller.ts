@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Headers, Injectable, Post } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Injectable, Post, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { PostsService } from '../services/posts.service';
 import { UserPost } from '../domain/user.post';
@@ -27,7 +27,7 @@ export class PostsController {
   @Get('myPosts')
   myPosts(
     @Headers() headers,
-    @Body() body: { count, offset },
+    @Query() body: { count, offset },
   ): {
     total: number,
     items: UserPost[]
@@ -39,7 +39,7 @@ export class PostsController {
   @Get('userPosts')
   userPosts(
     @Headers() headers,
-    @Body() body: { userId, count, offset },
+    @Query() body: { userId, count, offset },
   ): {
     total: number,
     items: UserPost[]
@@ -51,7 +51,7 @@ export class PostsController {
   @Get('feed')
   feed(
     @Headers() headers,
-    @Body() body: { count, offset },
+    @Query() body: { count, offset },
   ): {
     total: number,
     items: UserPost[]

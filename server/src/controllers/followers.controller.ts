@@ -2,6 +2,7 @@ import { Headers, Body, Controller, Get, HttpException, Post, Query } from '@nes
 import { AuthService } from '../services/auth.service';
 import { UsersService } from '../services/users.service';
 import { FollowersService } from '../services/followers.service';
+import { UserProfile } from '../domain/user.post';
 
 @Controller('followers')
 export class FollowersController {
@@ -30,31 +31,38 @@ export class FollowersController {
     this.service.unfollowUser(userId, body.userId);
   }
 
-  @Get('getFollowers')
-  getFollowerForUser(
+  @Get('userFollowers')
+  userFollowers(
     @Headers() headers,
     @Query() query: { userId },
-  ): {
-    id: string,
-    firstName: string,
-    lastName: string,
-    description: string,
-  }[] {
-    this.authService.authByToken(headers);
-    return this.service.getFollowers(query.userId);
+  ): UserProfile[] {
+    let userId = this.authService.authByToken(headers);
+    return this.service.getFollowers(query.userId, userId);
   }
 
-  @Get('getMyFollowers')
-  getMyFollowers(
+  @Get('myFollowers')
+  myFollowers(
     @Headers() headers,
-  ): {
-    id: string,
-    firstName: string,
-    lastName: string,
-    description: string,
-  }[] {
+  ): UserProfile[] {
     let userId = this.authService.authByToken(headers);
-    return this.service.getFollowers(userId);
+    return this.service.getFollowers(userId, userId);
+  }
+
+  @Get('userFollowed')
+  userFollowed(
+    @Headers() headers,
+    @Query() query: { userId },
+  ): UserProfile[] {
+    let userId = this.authService.authByToken(headers);
+    return this.service.getFollowedUsers(query.userId, userId);
+  }
+
+  @Get('myFollowed')
+  myFollowed(
+    @Headers() headers,
+  ): UserProfile[] {
+    let userId = this.authService.authByToken(headers);
+    return this.service.getFollowedUsers(userId, userId);
   }
 
 }

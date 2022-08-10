@@ -15,4 +15,12 @@ export class AuthCommons {
     return client;
   }
 
+  static async newUsers(count: number): Promise<ApiClient[]> {
+    let result: ApiClient[] = []
+    for (let i = 0; i < count; i++) {
+      result.push(await AuthCommons.newUser())
+    }
+    return result
+  }
+
 }

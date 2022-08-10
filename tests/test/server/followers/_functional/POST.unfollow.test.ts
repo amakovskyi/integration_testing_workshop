@@ -8,16 +8,18 @@ describe('POST [/followers/follow] functional', () => {
     let other = await AuthCommons.newUser();
 
     await user.post('followers/follow', {
-      userId:  other.userId,
+      userId: other.userId,
+    });
+    await user.post('followers/unfollow', {
+      userId: other.userId,
     });
 
-    validateMatch(
-      await user.get('users/getProfile', {
-        id:  other.userId,
-      }), {
-        isFollowed: true,
-      },
-    );
+    let profile = await user.get('users/getProfile', {
+      id: other.userId,
+    });
+    validateMatch(profile, {
+      isFollowed: false,
+    });
   });
 
 });

@@ -18,7 +18,7 @@ export class ApiClient {
 
   async loadUserId() {
     let data = await this.get('users/me');
-   this. userId = data.id;
+    this.userId = data.id;
   }
 
   private async execute(
@@ -31,6 +31,9 @@ export class ApiClient {
     Logger.println();
     let url = BASE_API_URL + requestData.path;
     Logger.logBold('POST ' + url);
+    if (this.userId != null) {
+      Logger.log('User ID: ' + this.userId);
+    }
     if (requestData.body != null) {
       Logger.log('REQUEST BODY');
       Logger.logData(JSON.stringify(requestData.body, null, 2));

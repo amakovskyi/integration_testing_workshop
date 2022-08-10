@@ -1,6 +1,7 @@
 import { Data } from './data';
 import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
+import { validateData } from './data.validation';
 
 @Injectable()
 export class Storage {
@@ -24,6 +25,7 @@ export class Storage {
   }
 
   commitData(data: Data) {
+    validateData(data);
     let raw = JSON.stringify(data, null, 2);
     fs.writeFileSync('./storage/data.json', raw);
   }

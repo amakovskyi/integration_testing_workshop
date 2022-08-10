@@ -152,7 +152,7 @@ ____________________________________
 
 # Get user followers
 
-**GET** ```/followers/getFollowers?userId=uuid``` _(auth)_
+**GET** ```/followers/userFollowers?userId=uuid``` _(auth)_
 
 RESPONSE
 
@@ -162,7 +162,8 @@ RESPONSE
     "id": "uuid",
     "firstName": "string",
     "lastName": "string",
-    "description": "string"
+    "description": "string",
+    "isFollowed": "boolean"
   }
 ]
 ```
@@ -171,7 +172,7 @@ ____________________________________
 
 # Get my followers
 
-**GET** ```/followers/getMyFollowers``` _(auth)_
+**GET** ```/followers/myFollowers``` _(auth)_
 
 RESPONSE
 
@@ -181,7 +182,48 @@ RESPONSE
     "id": "uuid",
     "firstName": "string",
     "lastName": "string",
-    "description": "string"
+    "description": "string",
+    "isFollowed": "boolean"
+  }
+]
+```
+
+____________________________________
+
+# Get user followed users
+
+**GET** ```/followers/userFollowed?userId=uuid``` _(auth)_
+
+RESPONSE
+
+```json
+[
+  {
+    "id": "uuid",
+    "firstName": "string",
+    "lastName": "string",
+    "description": "string",
+    "isFollowed": "boolean"
+  }
+]
+```
+
+____________________________________
+
+# Get my followed users
+
+**GET** ```/followers/myFollowed``` _(auth)_
+
+RESPONSE
+
+```json
+[
+  {
+    "id": "uuid",
+    "firstName": "string",
+    "lastName": "string",
+    "description": "string",
+    "isFollowed": "boolean"
   }
 ]
 ```
