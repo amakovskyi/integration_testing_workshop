@@ -61,10 +61,10 @@ export class AuthService {
     if (authorization == null || typeof authorization != 'string') {
       throw new HttpException('Unauthorized', 401);
     }
-    if (!authorization.startsWith('Token: ')) {
+    if (!authorization.startsWith('Token ')) {
       throw new HttpException('Unauthorized', 401);
     }
-    let token = authorization.substring('Token: '.length);
+    let token = authorization.substring('Token '.length);
     let userId = this.authStorage.authByToken(token);
     if (userId == null) {
       throw new HttpException('Unauthorized', 401);

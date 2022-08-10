@@ -41,7 +41,7 @@ export class ApiClient {
     let config: AxiosRequestConfig = {};
     if (this.token != null) {
       config.headers = {
-        authorization: 'Token: ' + this.token,
+        authorization: 'Token ' + this.token,
       };
     }
     try {
@@ -56,7 +56,7 @@ export class ApiClient {
       return response.data;
     } catch (e: any) {
       if (e.name == 'AxiosError') {
-        Logger.logError('RESPONSE: ' + e.response.status + ' ' + e.response.data.message);
+        Logger.logError('RESPONSE: ' + e.response.status + ' "' + e.response.data.message + '"');
         throw new ApiException(e.response.data);
       }
       console.log(e);
@@ -74,15 +74,19 @@ export class ApiClient {
         pathWithQuery = path + '?' + queryString;
       }
     }
-    return this.execute({ path: pathWithQuery }, async (url, data, config) => {
-      return axios.get(url, config);
-    });
+    return this.execute({ path: pathWithQuery },
+      async (url, body, config) => {
+        return axios.get(url, config);
+      },
+    );
   }
 
   async post(path: string, body?: any): Promise<any> {
-    return this.execute({ path, body }, async (url, data, config) => {
-      return axios.post(url, data, config);
-    });
+    return this.execute({ path, body },
+      async (url, body, config) => {
+        return axios.post(url, body, config);
+      },
+    );
   }
 
 }

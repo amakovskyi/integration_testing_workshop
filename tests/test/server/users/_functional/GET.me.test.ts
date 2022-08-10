@@ -14,7 +14,6 @@ describe('GET [/users/me] functional', () => {
       firstName: null,
       lastName: null,
       description: null,
-      isFollowed: Matchers.boolean(),
     }));
   });
 
@@ -33,7 +32,6 @@ describe('GET [/users/me] functional', () => {
       firstName,
       lastName,
       description,
-      isFollowed: Matchers.boolean(),
     }));
   });
 

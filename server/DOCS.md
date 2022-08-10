@@ -1,3 +1,18 @@
+# Server status
+
+**GET** ```/?message=string```
+
+RESPONSE
+
+```json
+{
+  "status": "Up",
+  "message": "string"
+}
+```
+
+____________________________________
+
 # Register user
 
 **POST** ```/register```
@@ -239,6 +254,27 @@ REQUEST
 ```json
 {
   "text": "string"
+}
+```
+
+RESPONSE
+
+```json
+"uuid"
+```
+
+____________________________________
+
+
+# Delete post
+
+**POST** ```/posts/deletePost``` _(auth)_
+
+REQUEST
+
+```json
+{
+  "id": "uuid"
 }
 ```
 

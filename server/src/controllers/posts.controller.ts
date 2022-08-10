@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Headers, Injectable, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpException, Injectable, Post, Query } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { PostsService } from '../services/posts.service';
 import { UserPost } from '../domain/user.post';
@@ -22,6 +22,15 @@ export class PostsController {
       authorId: userId,
       text: body.text,
     });
+  }
+
+  @Post('deletePost')
+  deletePost(
+    @Headers() headers,
+    @Body() body: { id },
+  ) {
+    let userId = this.authService.authByToken(headers);
+    this.service.deletePost(userId, body.id);
   }
 
   @Get('myPosts')

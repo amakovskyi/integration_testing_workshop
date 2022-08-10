@@ -23,7 +23,14 @@ export class UsersController {
     description: string,
   } {
     let userId = this.authService.authByToken(headers);
-    return this.service.getUserInfoById(userId, userId);
+    let info = this.service.getUserInfoById(userId, userId);
+    return {
+      id: info.id,
+      login: info.login,
+      firstName: info.firstName,
+      lastName: info.lastName,
+      description: info.description,
+    };
   }
 
   @Post('updateMyProfile')

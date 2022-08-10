@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Storage } from '../storage/storage';
 import { generateUuid } from '../utils/utils';
 import { UserPost } from '../domain/user.post';
@@ -26,6 +26,16 @@ export class PostsService {
     });
     this.storage.commitData(data);
     return id;
+  }
+
+  deletePost(userId: string, postId: string) {
+    let data = this.storage.loadData();
+    let index = data.posts.findIndex(it => it.id == postId);
+    if (data.posts[index].authorId != userId) {
+      throw new Error('User is not post author');
+    }
+    data.posts.splice(index, 1);
+    this.storage.commitData(data);
   }
 
   private loadPost(data: Data, post: PostData): UserPost {
