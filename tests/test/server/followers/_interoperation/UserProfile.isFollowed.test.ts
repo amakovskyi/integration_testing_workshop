@@ -1,7 +1,7 @@
 import { AuthCommons } from '../../../../src/auth.commons';
 import { validateMatch } from '@amakovskyi/api-auditor';
 
-describe('[User profile] responds to [Follow user]', () => {
+describe('[User profile] responds to [Follower state]', () => {
 
   test('User not followed', async () => {
     let user = await AuthCommons.newUser();

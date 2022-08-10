@@ -5,11 +5,18 @@ import { Matchers, Random, validateMatch } from '@amakovskyi/api-auditor';
 
 describe('Workshop part 2.1. Testing "My profile". Functional test.', () => {
 
-  // 1. Write profile test
-  // 2. Show using "validateMatch"."
+  // 1. Create user using AuthCommons
+  // 2. Validate result
   test('My profile: default state', async () => {
     // TODO
   });
+
+  // https://www.npmjs.com/package/@amakovskyi/api-auditor
+  // rewrite validation using matchers
+  test('API-Auditor matcher', async () => {
+    // TODO copy code from previous test and use validateMatch()
+  });
+
 
   // 1. Create user
   // 2. Update profile

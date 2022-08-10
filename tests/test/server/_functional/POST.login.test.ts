@@ -3,7 +3,7 @@ import { RandomUtils } from '../../../src/random.utils';
 import { expectError } from '../../../src/expect.error';
 import { Matchers, validateMatch } from '@amakovskyi/api-auditor';
 
-describe('POST [/register] functional', () => {
+describe('POST [/login] functional', () => {
 
   test('Success', async () => {
     let login = RandomUtils.login();

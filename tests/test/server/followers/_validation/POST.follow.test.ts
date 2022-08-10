@@ -4,6 +4,11 @@ import { expectError } from '../../../../src/expect.error';
 
 describe('POST [/followers/follow] validation', () => {
 
+  test('[userId] is not passed', expectError(async () => {
+    let user = await AuthCommons.newUser();
+    await user.post('followers/follow');
+  }));
+
   test('[userId] is null', expectError(async () => {
     let user = await AuthCommons.newUser();
     await user.post('followers/follow', {

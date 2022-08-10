@@ -4,7 +4,7 @@ import { ApiClient } from '../../../../src/api.client';
 import { Users } from '../../users/Users';
 import { Followers } from '../Followers';
 
-describe('[Users list] responds to [Follow user]', () => {
+describe('[Users list] responds to [Follower state]', () => {
 
   test('List of users', async () => {
     let firstName = Random.string(24);
