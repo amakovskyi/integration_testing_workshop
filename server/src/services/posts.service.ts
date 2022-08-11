@@ -31,8 +31,11 @@ export class PostsService {
   deletePost(userId: string, postId: string) {
     let data = this.storage.loadData();
     let index = data.posts.findIndex(it => it.id == postId);
+    if (index < 0) {
+      throw new HttpException('Post id does not exists', 400);
+    }
     if (data.posts[index].authorId != userId) {
-      throw new Error('User is not post author');
+      throw new HttpException('User is not post author', 403);
     }
     data.posts.splice(index, 1);
     this.storage.commitData(data);

@@ -17,6 +17,9 @@ export class PostsController {
     @Headers() headers,
     @Body() body: { text },
   ): string {
+    if (typeof body.text != 'string') {
+      throw new HttpException('[text] should be a string', 400)
+    }
     let userId = this.authService.authByToken(headers);
     return this.service.createPost({
       authorId: userId,

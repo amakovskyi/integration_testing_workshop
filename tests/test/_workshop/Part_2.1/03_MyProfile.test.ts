@@ -8,7 +8,17 @@ describe('Workshop part 2.1. Testing "My profile".', () => {
   // 1. Create user using AuthCommons
   // 2. Validate result
   test('My profile: default state', async () => {
-    // TODO
+    let login = RandomUtils.login();
+    let user = await AuthCommons.newUser(login);
+    let response = await user.get('users/me');
+
+    validateMatch(response, {
+      id: Matchers.uuid(),
+      login: login,
+      firstName: null,
+      lastName: null,
+      description: null,
+    });
   });
 
   // https://www.npmjs.com/package/@amakovskyi/api-auditor
@@ -22,7 +32,25 @@ describe('Workshop part 2.1. Testing "My profile".', () => {
   // 2. Update profile
   // 3. Validate result
   test('My profile: state after update', async () => {
-    // TODO
+    let login = RandomUtils.login();
+    let user = await AuthCommons.newUser(login);
+
+    let firstName = Random.string(16)
+    let lastName = Random.string(16)
+    let description = Random.string(64)
+
+    await user.post('users/updateMyProfile', {
+      firstName, lastName, description
+    })
+
+    let response = await user.get('users/me');
+    validateMatch(response, {
+      id: Matchers.uuid(),
+      login: login,
+      firstName: firstName,
+      lastName: lastName,
+      description: description,
+    });
   });
 
 });

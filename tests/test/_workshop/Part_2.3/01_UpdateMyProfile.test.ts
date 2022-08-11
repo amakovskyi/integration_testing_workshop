@@ -1,6 +1,7 @@
 import { expectError } from '../../../src/expect.error';
 import { AuthCommons } from '../../../src/auth.commons';
 import { ApiClient } from '../../../src/api.client';
+import { Random } from '@amakovskyi/api-auditor';
 
 describe('POST [/users/updateMyProfile] dimensions', () => {
 
@@ -17,19 +18,34 @@ describe('POST [/users/updateMyProfile] dimensions', () => {
   });
 
   test('[firstName] is missing', expectError(async () => {
-    // TODO
+    await user.post('users/updateMyProfile', {
+      lastName: Random.string(12),
+      description: Random.text(),
+    });
   }));
 
   test('[firstName] is null', expectError(async () => {
-    // TODO
+    await user.post('users/updateMyProfile', {
+      firstName: null,
+      lastName: Random.string(12),
+      description: Random.text(),
+    });
   }));
 
   test('[firstName] is empty', expectError(async () => {
-    // TODO
+    await user.post('users/updateMyProfile', {
+      firstName: '',
+      lastName: Random.string(12),
+      description: Random.text(),
+    });
   }));
 
   test('[firstName] is not a string', expectError(async () => {
-    // TODO
+    await user.post('users/updateMyProfile', {
+      firstName: [1, 2, 3],
+      lastName: Random.string(12),
+      description: Random.text(),
+    });
   }));
 
   // [lastName] DIMENSION
